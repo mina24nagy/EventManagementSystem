@@ -1,0 +1,15 @@
+.event-list {
+    padding: 1rem;
+    background-color: var(--gray-400);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .event-item {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--red-to-pink-to-purple-horizontal-gradient);
+    color: white;
+    border-radius: 8px;
+  }
+  

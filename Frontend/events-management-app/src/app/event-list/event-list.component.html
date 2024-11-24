@@ -1,1 +1,9 @@
-<p>event-list works!</p>
+<div *ngIf="events && events.length === 0">No events found</div>
+<div *ngFor="let event of events">
+  <h2>{{ event.Name }}</h2>
+  <p>{{ event.Description }}</p>
+  <p>{{ event.Location }}</p>
+  <p>{{ event.StartDate | date }}</p>
+  <p>{{ event.EndDate | date }}</p>
+  <p>Capacity: {{ event.Capacity }}</p>
+</div>

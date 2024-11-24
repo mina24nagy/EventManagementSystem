@@ -21,7 +21,14 @@ namespace EventManagementApi
             // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
-            builder.Services.AddCors();
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowAll",
+                    b => b
+                        .AllowAnyOrigin()
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+            });
 
             builder.Services.AddScoped<GlobalExceptionHandler>();
             builder.Services.AddDbContext<EventDbContext>(options =>
@@ -47,6 +54,7 @@ namespace EventManagementApi
 
             app.UseHttpsRedirection();
             app.UseAuthorization();
+            app.UseCors("AllowAll");
             app.MapControllers();
 
             app.Run();
