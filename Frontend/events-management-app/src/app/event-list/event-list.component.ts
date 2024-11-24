@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';  // Ensure this import is present
+import { CommonModule } from '@angular/common';
 import { EventService } from '../event.service';
 import { Event } from '../event.model';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-event-list',
+  selector: 'app-event-list',   
+
   standalone: true,
-  imports: [CommonModule],  // Ensure CommonModule is included
+  imports: [CommonModule],
   template: `
     <div class="container">
       <button class="create-btn" (click)="createEvent()">Create Event</button>
@@ -74,18 +76,21 @@ import { Event } from '../event.model';
     .actions button:nth-child(2) {
       background-color: #dc3545; /* Red for delete */
     }
+    /* Your existing CSS styles */
   `]
 })
 export class EventListComponent implements OnInit {
   events: Event[] = [];
 
-  constructor(private eventService: EventService) {}
+  constructor(private eventService: EventService, private router: Router) {}
 
-  ngOnInit(): void {
-    this.eventService.getAllEvents().subscribe(
+  ngOnInit():   
+ void {
+    this.eventService.getAllEvents().subscribe(   
+
       (data) => {
-        console.log('Events received:', data); // Verify data in console
-        this.events = data; // Assign data to events array
+        console.log('Events received:', data);
+        this.events = data;
       },
       (error) => {
         console.error('Error while fetching events:', error);
@@ -94,17 +99,24 @@ export class EventListComponent implements OnInit {
   }
 
   createEvent(): void {
-    // Handle creating a new event (you can navigate to a form or show a modal)
-    console.log('Create new event');
+    this.router.navigate(['/event-form']);
   }
 
   editEvent(event: Event): void {
-    // Handle editing the event (navigate to edit form or show a modal)
-    console.log('Editing event', event);
+    this.router.navigate(['/event-form', event.eventId]);
   }
 
   deleteEvent(eventId: string): void {
-    // Handle deleting the event
-    console.log('Deleting event with ID:', eventId);
+    this.eventService.deleteEvent(eventId).subscribe(
+      () => {
+        console.log('Event deleted successfully');
+        // Update the events list to reflect the deletion
+        this.events = this.events.filter(event => event.eventId !== eventId);
+      },
+      (error) => {
+        console.error('Error deleting event:', error);
+        // Handle error, e.g., display an error message to the user
+      }
+    );
   }
 }
