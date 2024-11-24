@@ -12,14 +12,14 @@ import { Event } from '../event.model';
       <button class="create-btn" (click)="createEvent()">Create Event</button>
       <div class="event-grid">
         <div class="event-card" *ngFor="let event of events">
-          <h2>{{ event.Name }}</h2>
-          <p>{{ event.Description }}</p>
-          <p><strong>Start:</strong> {{ event.StartDate | date:'short' }}</p>
-          <p><strong>End:</strong> {{ event.EndDate | date:'short' }}</p>
-          <p><strong>Location:</strong> {{ event.Location }}</p>
+          <h2>{{ event.name }}</h2>
+          <p>{{ event.description }}</p>
+          <p><strong>Start:</strong> {{ event.startDate | date:'short' }}</p>
+          <p><strong>End:</strong> {{ event.endDate | date:'short' }}</p>
+          <p><strong>Location:</strong> {{ event.location }}</p>
           <div class="actions">
             <button (click)="editEvent(event)">Edit</button>
-            <button (click)="deleteEvent(event.EventId)">Delete</button>
+            <button (click)="deleteEvent(event.eventId)">Delete</button>
           </div>
         </div>
       </div>
@@ -82,7 +82,7 @@ export class EventListComponent implements OnInit {
   constructor(private eventService: EventService) {}
 
   ngOnInit(): void {
-    this.eventService.getEvents().subscribe(
+    this.eventService.getAllEvents().subscribe(
       (data) => {
         console.log('Events received:', data); // Verify data in console
         this.events = data; // Assign data to events array
